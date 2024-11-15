@@ -1,0 +1,31 @@
+
+<div class="navbar" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://i.redd.it/dowhrleh3anb1.jpg)">
+  WATCHLIST DB
+</div>
+
+<div class="card text-center my-5">
+  <div class="card-body">
+    <h3 class="card-title"> <strong>🍿 Custom Movie Library 🍿</strong></h5>
+    <p class="card-text">Create custom watchlists to track your library and share with your friends!</p>
+    <%= link_to "Create New List", new_list_path, class:"btn btn-primary" %>
+  </div>
+</div>
+
+<div class="container p-3 mt-4">
+  <div class="row justify-content-between">
+    <% unless @lists.nil? %>
+      <% @lists.each do |list| %>
+       <div class="card col-4 p-3 mt-3" style="width: 22rem;">
+          <img src="https://media.istockphoto.com/id/527660774/vector/under-construction-industrial-sign.jpg?s=612x612&w=0&k=20&c=3U2TR5u_Drl4B5HBRc13wHD32nZe38UhlB6hzkj93U0=" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h4 class="card-title"><strong><%= list.name%></strong></h5>
+            <div class="d-flex justify-content-between">
+              <%= link_to "List details", list_path(list), class:"btn btn-primary" %>
+              <%= link_to "Delete list", list_path(list), data: { turbo_method: :delete,  turbo_confirm: "Are you sure?"}, class:"btn btn-danger" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

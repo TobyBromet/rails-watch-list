@@ -1,0 +1,36 @@
+<div class="card text-center my-5">
+  <div class="card-body">
+    <h2 class="card-title"> <strong><%= @list.name %></strong></h5>
+    <p class="card-text">➕ Add movies to your <%= @list.name %> list!</p>
+    <div class="container">
+      <div class="row justify-content-center gx-5">
+      <%= link_to "🏠 Back to home", lists_path, class:"btn btn-primary mx-3 col-4" %>
+      <%= link_to "🔙 Back to #{@list.name}", list_path(@list), class:"btn btn-success mx-3 col-4" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-around column-gap-2">
+    <% @movies.each do |movie| %>
+      <div class="card col-4 p-3 my-3" style="width: 18rem;">
+        <img src="<%= movie.poster_url%>" class="card-img-top" alt="...">
+        <div class="card-body p-2 py-5">
+          <div class="row">
+            <h4 class="card-title col-8"><strong><%= movie.title%></strong></h4>
+            <h5 class="col-4"> <strong>⭐️</strong><%= movie.rating.round(1) %></h5>
+          </div>
+          <p class="card-text"> <strong>Description: </strong> <%= movie.overview %></p>
+          <div class="">
+          <%= simple_form_for [@list, @bookmark] do |f| %>
+            <%= f.input :comment %>
+            <%= f.hidden_field :movie_id, value: movie.id %>
+            <%= f.button :submit, class:"btn btn-primary" %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

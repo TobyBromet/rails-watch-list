@@ -1,0 +1,14 @@
+<div class="card text-center my-5">
+  <div class="card-body">
+    <h2 class="card-title"> <strong>Create new list</strong></h5>
+    <p class="card-text">Create a new list to add movies to it!</p>
+    <div class="container">
+      <%= simple_form_for @list do |f| %>
+        <%= f.input :name  %>
+        <%= f.button :submit, class:"btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= link_to "🏠 Back to home", lists_path, class:"btn btn-primary mx-3 col-2" %>

@@ -7,3 +7,48 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# require faker
+
+# puts "Cleaning databse"
+# Movie.destroy_all
+
+# puts "Seeding movies"
+# 40.times do
+#   movie = Movie.new(
+#     title: faker::Movie.title,
+#     overview: faker::Faker::Movies::StarWars.quote,
+#     poster_url:
+#   )
+#   movie.save
+# end
+
+# puts
+
+require "json"
+require "open-uri"
+
+puts "Cleaning databse"
+Movie.destroy_all
+
+url = "https://tmdb.lewagon.com/movie/top_rated"
+movies_data = URI.open(url).read
+movies_hash = JSON.parse(movies_data)
+movies_array = movies_hash["results"]
+
+puts "Seeding movies"
+
+movies_array.each do |movie|
+  title = movie["title"]
+  overview = movie["overview"]
+  image = "https://image.tmdb.org/t/p/w500/#{movie['poster_path']}"
+  rating = movie["vote_average"]
+  Movie.create(
+    title: title,
+    overview: overview,
+    poster_url: image,
+    rating: rating
+  )
+end
+
+puts "#{Movie.count} movies seeded!"

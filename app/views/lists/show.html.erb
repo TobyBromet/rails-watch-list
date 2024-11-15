@@ -1,0 +1,33 @@
+<div class="card text-center my-5">
+  <div class="card-body">
+    <h2 class="card-title"> <strong><%= @list.name %></strong></h5>
+    <p class="card-text">Create custom watchlists to track your library and share with your friends!</p>
+    <div class="container">
+      <div class="row justify-content-center gx-5">
+      <%= link_to "🏠 Back to home", lists_path, class:"btn btn-primary mx-3 col-4" %>
+      <%= link_to "➕ Add Movie", new_list_bookmark_path(@list), class:"btn btn-success mx-3 col-4" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-around column-gap-2">
+    <% @bookmarks.each do |bookmark| %>
+      <div class="card col-4 p-3" style="width: 18rem;">
+        <img src="<%=bookmark.movie.poster_url%>" class="card-img-top" alt="...">
+        <div class="card-body p-2">
+          <div class="row">
+            <h4 class="card-title col-8"><strong><%= bookmark.movie.title%></strong></h4>
+            <h5 class="col-4"> <strong>⭐️</strong><%= bookmark.movie.rating.round(1) %></h5>
+          </div>
+          <p class="card-text"> <strong>🗣️ User comment:</strong> <%= bookmark.comment %></p>
+          <p class="card-text"> <strong>Description: </strong> <%= bookmark.movie.overview %></p>
+          <div class="align-self-end">
+          <%= button_to "Remove from list", list_bookmark_path(@list, bookmark), method: :delete, data: { turbo_confirm: "Are you sure you want to remove this bookmark?"} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
